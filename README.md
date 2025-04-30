@@ -65,7 +65,11 @@ You may feel the right part a bit empty. If you want, there's an option to displ
 ```
 set -g @tmux-dotbar-right true
 ```
-If you want to change it completely, you can, just modify the variable `tmux-dotbar-status-right` accordingly.  
+If you want to change it completely, you can, just modify the variable `tmux-dotbar-status-right` accordingly. or you want to change the **position** of the status-bar with `tmux-dotbar-status`
+```
+set -g @tmux-dotbar-status top # or bottom by default
+```
+
 There's a variable for each part of the statusbar, you can reference it by looking at the `dotbar.tmux` in the repository.
 
 ## Recommended tmux options
