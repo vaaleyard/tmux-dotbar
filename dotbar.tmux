@@ -17,9 +17,10 @@ get_tmux_option() {
 # colors
 bg=$(get_tmux_option "@tmux-dotbar-bg" '#0B0E14')
 fg=$(get_tmux_option "@tmux-dotbar-fg" '#475266')
+fg_path=$(get_tmux_option "@tmux-dotbar-fg-path" '#f5a97f')
+fg_prefix=$(get_tmux_option "@tmux-dotbar-fg-prefix" '#95E6CB')
 fg_current=$(get_tmux_option "@tmux-dotbar-fg-current" '#BFBDB6')
 fg_session=$(get_tmux_option "@tmux-dotbar-fg-session" '#565B66')
-fg_prefix=$(get_tmux_option "@tmux-dotbar-fg-prefix" '#95E6CB')
 
 status=$(get_tmux_option "@tmux-dotbar-position" "bottom")
 justify=$(get_tmux_option "@tmux-dotbar-justify" "absolute-centre")
@@ -33,7 +34,7 @@ fi
 
 right_state=$(get_tmux_option "@tmux-dotbar-right" "false")
 if [ "$right_state" = "true" ]; then
-  status_right="#[bg=$bg,fg=$fg_session] %H:%M #[bg=$bg,fg=$fg_session]"
+  status_right="#[bg=$bg,fg=$fg_path] #{b:pane_current_path} #[bg=$bg,fg=$fg_session] %H:%M "
 else
   status_right=""
 fi
