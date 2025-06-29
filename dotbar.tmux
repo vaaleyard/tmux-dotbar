@@ -3,10 +3,8 @@
 get_tmux_option() {
   local option=$1
   local default_value="$2"
-
   local option_value
   option_value=$(tmux show-options -gqv "$option")
-
   if [ -n "$option_value" ]; then
     echo "$option_value"
     return
@@ -14,7 +12,6 @@ get_tmux_option() {
   echo "$default_value"
 }
 
-# colors
 bg=$(get_tmux_option "@tmux-dotbar-bg" '#0B0E14')
 fg=$(get_tmux_option "@tmux-dotbar-fg" '#475266')
 fg_path=$(get_tmux_option "@tmux-dotbar-fg-path" '#f5a97f')
@@ -48,12 +45,9 @@ show_maximized_icon_for_all_tabs=$(get_tmux_option "@tmux-dotbar-show-maximized-
 tmux set-option -g status-position "$status"
 tmux set-option -g status-style "bg=${bg},fg=${fg}"
 tmux set-option -g status-justify "$justify"
-
 tmux set-option -g status-left "$status_left"
 tmux set-option -g status-right "$status_right"
-
 tmux set-window-option -g window-status-separator "$window_status_separator"
-
 tmux set-option -g window-status-style "bg=${bg},fg=${fg}"
 tmux set-option -g window-status-format "$window_status_format"
 
@@ -62,3 +56,12 @@ if [ "$show_maximized_icon_for_all_tabs" = "true" ]; then
 fi
 
 tmux set-option -g window-status-current-format "#[bg=${bg},fg=${fg_current}]${window_status_format}#[fg=#39BAE6,bg=${bg}]#{?window_zoomed_flag,${maximized_pane_icon},}#[fg=${bg},bg=default]"
+
+if [[ "$(uname)" == "Darwin" ]]; then
+  if [ "$right_state" = "true" ]; then
+    status_right="#[bg=$bg,fg=$fg_path] #{b:pane_current_path} "
+  else
+    status_right=""
+  fi
+  tmux set-option -g status-right "$status_right"
+fi
