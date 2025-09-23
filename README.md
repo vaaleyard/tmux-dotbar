@@ -60,6 +60,8 @@ set -g @tmux-dotbar-fg-session "#9399b2"
 set -g @tmux-dotbar-fg-prefix "#cba6f7"
 ```
 
+You can also set `@tmux-dotbar-bold-status` to use bold font in the statusbar, or `@tmux-dotbar-bold-current-window` to use bold font just for the present (active) window.
+
 ### Status bar
 You may feel the right part a bit empty. If you want, there's an option to display the current time there, you can enable it (disabled by default) in your `.tmux.conf`:
 ```
@@ -89,6 +91,8 @@ set -g @tmux-dotbar-window-status-format " #W "
 set -g @tmux-dotbar-window-status-separator " • "
 set -g @tmux-dotbar-maximized-icon "󰊓"
 set -g @tmux-dotbar-show-maximized-icon-for-all-tabs false
+set -g @tmux-dotbar-bold-status true
+set -g @tmux-dotbar-bold-current-window false
 ```
 
 ## Recommended tmux options
