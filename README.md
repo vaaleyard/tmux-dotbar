@@ -18,6 +18,7 @@ tmux dotbar is a simple and minimalist status bar theme for tmux. <br>
 ## Features
 * Icon indicator when a pane is maximized in a window
 * Color indication when tmux prefix is pressed
+* Bell and activity notifications properly displayed with custom styles
 
 ## Installation
 ### TPM (recommended)
