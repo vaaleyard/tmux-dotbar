@@ -21,11 +21,21 @@ fg_current=$(get_tmux_option "@tmux-dotbar-fg-current" '#BFBDB6')
 fg_session=$(get_tmux_option "@tmux-dotbar-fg-session" '#565B66')
 fg_prefix=$(get_tmux_option "@tmux-dotbar-fg-prefix" '#95E6CB')
 
+# bold options
+bold_status=$(get_tmux_option "@tmux-dotbar-bold-status" false)
+bold_current_window=$(get_tmux_option "@tmux-dotbar-bold-current-window" false)
+
 status=$(get_tmux_option "@tmux-dotbar-position" "bottom")
 justify=$(get_tmux_option "@tmux-dotbar-justify" "absolute-centre")
 
 left_state=$(get_tmux_option "@tmux-dotbar-left" true)
-status_left=$("$left_state" && get_tmux_option "@tmux-dotbar-status-left" "#[bg=$bg,fg=$fg_session]#{?client_prefix,, #S }#[bg=$fg_prefix,fg=$bg,bold]#{?client_prefix, #S ,}#[bg=$bg,fg=${fg_session}]")
+
+# Conditionally apply 'nobold' if @tmux-dotbar-bold-status is true
+if [ "$bold_status" = true ]; then
+  status_left=$("$left_state" && get_tmux_option "@tmux-dotbar-status-left" "#[bg=$bg,fg=$fg_session]#{?client_prefix,, #S }#[bg=$fg_prefix,fg=$bg,nobold]#{?client_prefix, #S ,}#[bg=$bg,fg=${fg_session}]")
+else
+  status_left=$("$left_state" && get_tmux_option "@tmux-dotbar-status-left" "#[bg=$bg,fg=$fg_session]#{?client_prefix,, #S }#[bg=$fg_prefix,fg=$bg,bold]#{?client_prefix, #S ,}#[bg=$bg,fg=${fg_session}]")
+fi
 
 right_state=$(get_tmux_option "@tmux-dotbar-right" false)
 status_right=$("$right_state" && get_tmux_option "@tmux-dotbar-status-right" "#[bg=$bg,fg=$fg_session] %H:%M #[bg=$bg,fg=${fg_session}]")
@@ -37,7 +47,14 @@ maximized_pane_icon=$(get_tmux_option "@tmux-dotbar-maximized-icon" '󰊓')
 show_maximized_icon_for_all_tabs=$(get_tmux_option "@tmux-dotbar-show-maximized-icon-for-all-tabs" false)
 
 tmux set-option -g status-position "$status"
-tmux set-option -g status-style "bg=${bg},fg=${fg}"
+
+# Conditionally apply bold to status-style
+if [ "$bold_status" = true ]; then
+  tmux set-option -g status-style "bg=${bg},fg=${fg},bold"
+else
+  tmux set-option -g status-style "bg=${bg},fg=${fg}"
+fi
+
 tmux set-option -g status-justify "$justify"
 
 tmux set-option -g status-left "$status_left"
@@ -49,4 +66,9 @@ tmux set-option -g window-status-style "bg=${bg},fg=${fg}"
 tmux set-option -g window-status-format "$window_status_format"
 "$show_maximized_icon_for_all_tabs" && tmux set-option -g window-status-format "${window_status_format}#{?window_zoomed_flag,${maximized_pane_icon},}"
 
-tmux set-option -g window-status-current-format "#[bg=${bg},fg=${fg_current}]${window_status_format}#[fg=#39BAE6,bg=${bg}]#{?window_zoomed_flag,${maximized_pane_icon},}#[fg=${bg},bg=default]"
+# Conditionally apply bold to window-status-current-format
+if [ "$bold_current_window" = true ]; then
+  tmux set-option -g window-status-current-format "#[bg=${bg},fg=${fg_current},bold]${window_status_format}#[fg=#39BAE6,bg=${bg}]#{?window_zoomed_flag,${maximized_pane_icon},}#[fg=${bg},bg=default]"
+else
+  tmux set-option -g window-status-current-format "#[bg=${bg},fg=${fg_current}]${window_status_format}#[fg=#39BAE6,bg=${bg}]#{?window_zoomed_flag,${maximized_pane_icon},}#[fg=${bg},bg=default]"
+fi
