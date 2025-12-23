@@ -80,8 +80,8 @@ set -g @tmux-dotbar-position top
 ```
 
 ### SSH integration
-When you ssh into a server, tmux-dotbar will change the window name to display an icon indicator. 
-Unfurtunately, tmux can't parse the window name when the SSH host is an IPv4 address. It gets truncated in the middle, e.g., `ssh user@192.168.1.100` will show only `192.168`. So for IP hosts this feature is not available.  
+When you ssh into a server, tmux-dotbar will change the window name to the SSH hostname and it will also add an icon indicator. 
+Unfurtunately, tmux can't parse the window name when the SSH host is an IPv4 address. It gets truncated in the middle, e.g., `ssh user@192.168.1.100` would show only `192.168`. So for IP hosts this feature is not available.  
 Due to this limitation, I've addded the option to only display the icon (and don't change the window name) as it might cause confusion if you use IPs extensively, because you would not be sure if the window name is the host or not. If that's not the case, you don't need to change these settings. An option to do not show the icon is also available.
 ```
 set -g @tmux-dotbar-ssh-icon '󰌘'
