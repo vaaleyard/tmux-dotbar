@@ -12,15 +12,20 @@ tmux dotbar is a simple and minimalist status bar theme for tmux. <br>
 <div align="center">
   <img src="./imgs/preview.png" width="800" />
   <img src="./imgs/prefix-preview.png" width="800" />
+  <p><em>Prefix and SSH indicator</em></p>
 </div>
 
 
 ## Features
 * Icon indicator when a pane is maximized in a window
+* Icon indicator for active SSH session
 * Color indication when tmux prefix is pressed
 * Bell and activity notifications properly displayed with custom styles
 
 ## Installation
+### Prerequisites
+This plugin uses Nerd Font icons, make sure you are using one in the terminal to work properly. If you don't want it, you can change the icons to something else.
+
 ### TPM (recommended)
 1.  Install [TPM](https://github.com/tmux-plugins/tpm)
 2.  Add the plugin:
@@ -50,8 +55,8 @@ tmux dotbar is a simple and minimalist status bar theme for tmux. <br>
 ## Configuration
 ### Colorscheme
 This theme works best depending on the colorscheme you use, because the status-bar background is supposed to mix with the terminal background.
-The default colorscheme used for this theme (as in the preview images) is [neovim-ayu](https://github.com/Shatur/neovim-ayu), so it matches the background for my tmux, terminal and vim colors.  
-It's **strongely recommended** to change the colors so it matches your colorscheme. You can get the colors from the theme palette and change/set these options:
+The default colorscheme used for this theme (as in the preview images) is [neovim-ayu](https://github.com/Shatur/neovim-ayu) in [Ghostty](https://ghostty.org/), so it matches the background for my tmux, terminal and vim colorscheme.  
+It's **strongely recommended** to change the colors so it matches your colorscheme. You can get the colors from your preferred theme palette and change/set these options:
 ```
 # supposing you use catppuccin moccha
 set -g @tmux-dotbar-bg "#1e1e2e"
@@ -61,7 +66,7 @@ set -g @tmux-dotbar-fg-session "#9399b2"
 set -g @tmux-dotbar-fg-prefix "#cba6f7"
 ```
 
-You can also set `@tmux-dotbar-bold-status` to use bold font in the statusbar, or `@tmux-dotbar-bold-current-window` to use bold font just for the present (active) window.
+You can also set `@tmux-dotbar-bold-status` to use bold font in the statusbar, or `@tmux-dotbar-bold-current-window` to use bold font just for the active window.
 
 ### Status bar
 You may feel the right part a bit empty. If you want, there's an option to display the current time there, you can enable it (disabled by default) in your `.tmux.conf`:
@@ -74,8 +79,29 @@ Another option you might want to try is to change the position of the status-bar
 set -g @tmux-dotbar-position top
 ```
 
+### SSH integration
+When you ssh into a server, tmux-dotbar will change the window name to display an icon indicator. 
+Unfurtunately, tmux can't parse the window name when the SSH host is an IPv4 address. It gets truncated in the middle, e.g., `ssh user@192.168.1.100` will show only `192.168`. So for IP hosts this feature is not available.
+Due to this limitation, I've addded the option to only display the icon (and don't change the window name) as it might cause confusion if you use IPs extensively, because you would not be sure if the window name is the host or not. If that's not the case, you don't need to change these settings. An option to do not show the icon is also available.
+```
+set -g @tmux-dotbar-ssh-icon '󰌘'
+set -g @tmux-dotbar-ssh-icon-only false
+set -g @tmux-dotbar-ssh-enabled true
+```
+
+## Recommended tmux options
+Since this theme does not display window indexes, it's best suited for users who manage a small number of windows.  
+To improve usability, it's hugely recommended to enable automatic renumbering when windows are closed.  
+Also a good option is to start window indexes at 1 for easier tracking.
+
+```
+set-option -g renumber-windows on
+set -g base-index 1
+setw -g pane-base-index 1
+```
+
 ### All options
-Below are all the options you can change with the default values. You can look at `dotbar.tmux` for more reference.
+Below are all the options you can change, with the default values. You can look at `dotbar.tmux` for more reference.
 ```
 set -g @tmux-dotbar-fg "#0B0E14"
 set -g @tmux-dotbar-bg "#475266"
@@ -94,17 +120,9 @@ set -g @tmux-dotbar-maximized-icon "󰊓"
 set -g @tmux-dotbar-show-maximized-icon-for-all-tabs false
 set -g @tmux-dotbar-bold-status true
 set -g @tmux-dotbar-bold-current-window false
-```
-
-## Recommended tmux options
-Since this theme does not display window indexes, it's best suited for users who manage a small number of windows.  
-To improve usability, it's hugely recommended to enable automatic renumbering when windows are closed.  
-Also a good option is to start window indexes at 1 for easier tracking.
-
-```
-set-option -g renumber-windows on
-set -g base-index 1
-setw -g pane-base-index 1
+set -g @tmux-dotbar-ssh-enabled true
+set -g @tmux-dotbar-ssh-icon '󰌘'
+set -g @tmux-dotbar-ssh-icon-only false
 ```
 
 ### Credits
