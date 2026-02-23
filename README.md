@@ -114,7 +114,8 @@ setw -g pane-base-index 1
 ```
 
 ### All options
-Below are all the options you can change, with the default values. You can look at `dotbar.tmux` for more reference.
+Below are all the options you can change, with the default values. You can look at `dotbar.tmux` for more reference.  
+**NOTE:** don't copy and paste these settings, they are here only for reference if you want to change any.
 ```
 set -g @tmux-dotbar-bg "#0B0E14"
 set -g @tmux-dotbar-fg "#475266"
