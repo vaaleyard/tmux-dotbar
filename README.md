@@ -73,10 +73,23 @@ You may feel the right part a bit empty. If you want, there's an option to displ
 ```
 set -g @tmux-dotbar-right true
 ```
-If you want to change it completely, you can, just modify the variable `tmux-dotbar-status-right` accordingly.
-Another option you might want to try is to change the position of the status-bar with `tmux-dotbar-position` (bottom by default):
+If you want to change the content of the right part (default is current time), you can:
+```
+set -g @tmux-dotbar-status-right-text " %H:%M "
+```
+Another option you might want to try is to change the position of the status-bar with `@tmux-dotbar-position` (bottom by default):
 ```
 set -g @tmux-dotbar-position top
+```
+
+#### Session Indicator
+By default, the session name is displayed on the left with prefix highlight logic. You can move it to the right or change its text:
+```
+# Move session indicator to the right (defaults to "left")
+set -g @tmux-dotbar-session-position "right"
+
+# Change the text (default to " #S ") while keeping the prefix highlight logic
+set -g @tmux-dotbar-session-text "[#S]"
 ```
 
 ### SSH integration
@@ -103,22 +116,23 @@ setw -g pane-base-index 1
 ### All options
 Below are all the options you can change, with the default values. You can look at `dotbar.tmux` for more reference.
 ```
-set -g @tmux-dotbar-fg "#0B0E14"
-set -g @tmux-dotbar-bg "#475266"
+set -g @tmux-dotbar-bg "#0B0E14"
+set -g @tmux-dotbar-fg "#475266"
 set -g @tmux-dotbar-fg-current "#BFBDB6"
 set -g @tmux-dotbar-fg-session "#565B66"
 set -g @tmux-dotbar-fg-prefix "#95E6CB"
 set -g @tmux-dotbar-position "bottom"
 set -g @tmux-dotbar-justify "absolute-centre"
 set -g @tmux-dotbar-left "true"
-set -g @tmux-dotbar-status-left "#S" # see code
 set -g @tmux-dotbar-right "false"
-set -g @tmux-dotbar-status-right "%H:%M" # see code
+set -g @tmux-dotbar-session-position "left"
+set -g @tmux-dotbar-session-text " #S "
+set -g @tmux-dotbar-status-right-text " %H:%M "
 set -g @tmux-dotbar-window-status-format " #W "
 set -g @tmux-dotbar-window-status-separator " • "
 set -g @tmux-dotbar-maximized-icon "󰊓"
 set -g @tmux-dotbar-show-maximized-icon-for-all-tabs false
-set -g @tmux-dotbar-bold-status true
+set -g @tmux-dotbar-bold-status false
 set -g @tmux-dotbar-bold-current-window false
 set -g @tmux-dotbar-ssh-enabled true
 set -g @tmux-dotbar-ssh-icon '󰌘'
