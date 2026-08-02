@@ -31,11 +31,18 @@ session_text=$(get_tmux_option "@tmux-dotbar-session-text" " #S ")
 session_position=$(get_tmux_option "@tmux-dotbar-session-position" "left")
 time_text=$(get_tmux_option "@tmux-dotbar-status-right-text" " %H:%M ")
 
-session_bold_style=""
-[ "$bold_session" = true ] && session_bold_style=",bold"
+session_bold_attr="nobold"
+[ "$bold_session" = true ] && session_bold_attr="bold"
 
-status_right_bold_style=""
-[ "$bold_status_right" = true ] && status_right_bold_style=",bold"
+status_right_bold_attr="nobold"
+[ "$bold_status_right" = true ] && status_right_bold_attr="bold"
+
+prefix_bold_attr="bold"
+if [ "$bold_status" = true ]; then
+  session_bold_attr="bold"
+  status_right_bold_attr="bold"
+  prefix_bold_attr="nobold"
+fi
 
 if [ "$rounded" = "true" ]; then
   edge_left=''
@@ -47,11 +54,11 @@ if [ "$rounded" = "true" ]; then
   else
     session_text_inner="$session_text"
   fi
-  session_component="#[bg=$bg,fg=$fg_session$session_bold_style]#{?client_prefix,#[fg=$fg_prefix]$edge_left,$session_text}#[bg=$fg_prefix,fg=$bg,bold]#{?client_prefix,$session_text_inner,}#[bg=$bg,fg=${fg_session}$session_bold_style]#{?client_prefix,#[fg=$fg_prefix]$edge_right,}"
+  session_component="#[bg=$bg,fg=$fg_session,$session_bold_attr]#{?client_prefix,#[fg=$fg_prefix]$edge_left,$session_text}#[bg=$fg_prefix,fg=$bg,$prefix_bold_attr]#{?client_prefix,$session_text_inner,}#[bg=$bg,fg=${fg_session},$session_bold_attr]#{?client_prefix,#[fg=$fg_prefix]$edge_right,}"
 else
-  session_component="#[bg=$bg,fg=$fg_session$session_bold_style]#{?client_prefix,,$session_text}#[bg=$fg_prefix,fg=$bg,bold]#{?client_prefix,$session_text,}#[bg=$bg,fg=${fg_session}$session_bold_style]"
+  session_component="#[bg=$bg,fg=$fg_session,$session_bold_attr]#{?client_prefix,,$session_text}#[bg=$fg_prefix,fg=$bg,$prefix_bold_attr]#{?client_prefix,$session_text,}#[bg=$bg,fg=${fg_session},$session_bold_attr]"
 fi
-time_component="#[bg=$bg,fg=$fg_session$status_right_bold_style]$time_text#[bg=$bg,fg=${fg_session}$status_right_bold_style]"
+time_component="#[bg=$bg,fg=$fg_session,$status_right_bold_attr]$time_text#[bg=$bg,fg=${fg_session},$status_right_bold_attr]"
 
 # Build Default Status Strings
 if [ "$session_position" = "right" ]; then
