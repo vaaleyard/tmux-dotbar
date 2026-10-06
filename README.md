@@ -97,13 +97,15 @@ set -g @tmux-dotbar-session-text "[#S]"
 
 ### SSH integration
 When you ssh into a server, tmux-dotbar will change the window name to the SSH hostname and it will also add an icon indicator. 
-Unfurtunately, tmux can't parse the window name when the SSH host is an IPv4 address. It gets truncated in the middle, e.g., `ssh user@192.168.1.100` would show only `192.168`. So for IP hosts this feature is not available.  
-Due to this limitation, I've addded the option to only display the icon (and don't change the window name) as it might cause confusion if you use IPs extensively, because you would not be sure if the window name is the host or not. If that's not the case, you don't need to change these settings. An option to do not show the icon is also available.
-```
-set -g @tmux-dotbar-ssh-icon '󰌘'
-set -g @tmux-dotbar-ssh-icon-only false
-set -g @tmux-dotbar-ssh-enabled true
-```
+
+> [!NOTE]
+> Unfurtunately, tmux can't parse the window name when the SSH host is an IPv4 address. It gets truncated in the middle, e.g., `ssh user@192.168.1.100` would show only `192.168`. So for IP hosts this feature is not available.  
+> Due to this limitation, I've addded the option to only display the icon (and don't change the window name) as it might cause confusion if you use IPs extensively, because you would not be sure if the window name is the host or not. If that's not the case, you don't need to change these settings. An option to do not show the icon is also available.
+> ```
+> set -g @tmux-dotbar-ssh-icon '󰌘'
+> set -g @tmux-dotbar-ssh-icon-only false
+> set -g @tmux-dotbar-ssh-enabled true
+> ```
 
 ## Recommended tmux options
 Since this theme does not display window indexes, it's best suited for users who manage a small number of windows.  
@@ -118,7 +120,8 @@ setw -g pane-base-index 1
 
 ### All options
 Below are all the options you can change, with the default values. You can look at `dotbar.tmux` for more reference.  
-**NOTE:** don't copy and paste these settings, they are here only for reference if you want to change any.
+> [!IMPORTANT]
+> **Don't** copy and paste these settings, they are here only for reference if you want to change any.
 ```
 set -g @tmux-dotbar-bg "#0B0E14"
 set -g @tmux-dotbar-fg "#475266"
