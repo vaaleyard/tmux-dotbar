@@ -108,14 +108,16 @@ When you ssh into a server, tmux-dotbar will change the window name to the SSH h
 > ```
 
 ## Recommended tmux options
-Since this theme does not display window indexes, it's best suited for users who manage a small number of windows.  
-To improve usability, it's hugely recommended to enable automatic renumbering when windows are closed.  
-Also a good option is to start window indexes at 1 for easier tracking.
+Since this theme does not display window indexes, it's best suited for users who manage a small number of windows (by small, I mean if you can select the window by the number without its id shown).  
+To improve usability, it's hugely recommended to enable automatic renumbering when windows are closed and to start window indexes at 1 for easier tracking.
+Starting in tmux 3.8, the window names comes underscored. You can disable it as well.
 
 ```
 set-option -g renumber-windows on
 set -g base-index 1
 setw -g pane-base-index 1
+set -g window-status-current-style default
+set -g session-status-current-style default
 ```
 
 ### All options
